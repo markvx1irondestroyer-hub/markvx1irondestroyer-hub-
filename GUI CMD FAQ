@@ -1,0 +1,78 @@
+⚠️ DO NOT CHANGE CODE UNLESS YOU ARE COMFORTABLE 
+   AND KNOW EXACTLY WHAT LINUX OS YOU'RE USING 
+ The current commands for GUI control cause reboot 
+This is because the systemctl cmds used are universal 
+To most linux os versions if you a comfortable and
+EXTREMELY CAREFUL!!! You can modify these commands 
+in the main install-headless.sh file in alias section 
+Make sure all commands are entered exactly right or they won't 
+Work if you're GUI Toggle Commands are not working you may 
+Have to change them CAREFULLY!!
+Switching between a graphical user interface (GUI) and a text-only terminal 
+(CLI) on Linux is handled by the display manager (like GDM, LightDM, or SDDM). 
+Depending on whether you want a temporary switch or a persistent change for your 
+current session, there are a few ways to handle this.1. The Modern Way (systemd)
+Most modern distributions (Ubuntu, Fedora, Debian, Arch) use systemctl to manage services. 
+This is the cleanest way to shut down the GUI.
+ * To turn the GUI OFF:
+   sudo systemctl isolate multi-user.target
+   This stops the graphical session and takes you to a basic command-line login.
+ * To turn the GUI ON:
+   sudo systemctl isolate graphical.target
+2. Managing the Service Directly (Better for pure performance server only mode)
+If you just want to stop the specific software that draws the login screen and desktop, 
+you can stop the display manager service.
+First, identify which one you're using (usually gdm3 for GNOME, sddm for KDE, or 
+lightdm for XFCE).
+For this specific .sh file ⚠️ if you have another version of Linux check the bottom of the page for info
+ * To Stop the GUI:
+   sudo systemctl stop gdm3
+ * To Start the GUI:
+   sudo systemctl start gdm3
+3. The "Emergency" Method (TTY)
+If your GUI is frozen and you just need to get to a terminal to fix something 
+  without actually killing the GUI process yet, use a Virtual Console.
+ * Keyboard Shortcut: Press Ctrl + Alt + F3 (or any function key from F3 to F6).
+ * To get back to the GUI: Press Ctrl + Alt + F1 or F2.
+Summary Table
+| Action        | Command                                     |
+|---------------|---------------------------------------------|
+
+| Kill GUI      |  sudo systemctl isolate multi-user.target   |
+
+| Restore GUI   |   sudo systemctl isolate graphical.target   |
+
+| Check DM Type | cat /etc/X11/default-display-manager        |
+
+> ⚠️[!IMPORTANT]🛑
+> Be sure to save your work before running these commands. Switching targets or 
+> stopping the display manager will immediately close all open applications like browsers or document editors.
+> Since Zorin OS is based on Ubuntu, it uses the same service management tools. However, the specific 
+> command depends on whether you are using Zorin OS Core/Pro (which uses GNOME) or Zorin OS Lite (which uses XFCE).
+1. The Recommended Way (Works for both)
+The "Isolate" command is the cleanest way because it tells the system to switch states (targets) entirely.
+For this specific .sh file ⚠️ if you have another version of Linux check the bottom of the page for info
+ * To Turn GUI OFF:
+   sudo systemctl isolate multi-user.target
+   (This drops you to a full-screen black terminal login.)
+ * To Turn GUI ON:
+   sudo systemctl isolate graphical.target
+2. The Service Method (Version Specific)
+If you prefer to stop the display service directly, 
+you need to know which version of Zorin you have.
+For Zorin OS Core or Pro (GNOME):
+ * OFF: sudo systemctl stop gdm3
+ * ON: sudo systemctl start gdm3
+   For Zorin OS Lite (XFCE):
+ * OFF: sudo systemctl stop lightdm
+ * ON: sudo systemctl start lightdm
+> [!TIP]
+> If you aren't sure which one you have, run cat /etc/X11/default-display-manager.
+>It will return a path ending in either /gdm3 or /lightdm.
+3. Quick Terminal Switch (No "Turning Off")
+If you just need a terminal quickly and don't actually need to kill the GUI 
+(to save RAM or troubleshoot), use the TTY shortcut:
+ * Go to Terminal: Ctrl + Alt + F3
+ * Go back to Desktop: Ctrl + Alt + F1 (or F2 depending on your version)
+Warning: Always save your work before running the stop or isolate commands! 
+These will force-close all open windows and applications immediately.
