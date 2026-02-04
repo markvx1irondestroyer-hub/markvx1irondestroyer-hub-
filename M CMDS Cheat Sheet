@@ -1,0 +1,17 @@
+🧟 Mercury Master Commands Cheat Sheet
+​To start your server from scratch, first download your folder and run the master installer:
+chmod +x masterinstaller.sh && ./masterinstaller.sh
+(Note: The system will automatically reboot after completion.)  
+​🕹️ The "m" Master Interface
+​Once installed, use these single-letter commands for daily management:  
+​m up: Starts all media apps in the background.  
+​m status: Dashboard view of storage, GPU temperature, and container health.  
+​m gpu: Live 1-second monitor for GTX 750 usage and performance.  
+​m ps: Shows exactly which apps are running and their network ports.  
+​m reset: The "Nuclear" option—wipes cache and restarts the entire stack fresh.  
+​m mount: Refreshes and remounts your "Vault" expansion drive.  
+​m urls: Displays the local IP links for all your Web UIs.
+​📂 Quick File Paths
+​Blueprint: ~/mercury/docker-compose.yml  
+​Vault: /media/linux/Expansion  
+​Configs: ~/mercury/config/  
