@@ -1,11 +1,13 @@
 To start your Mercury: The Headless Zombie Media Stack from scratch, follow these updated instructions.
 🚀 Phase 1: The Foundation
-Download the project files to your home directory.older:
+Download the project files to your home directory folder:
 ​masterinstaller.sh: The primary foundation and driver setup.
 From Option 1 Repository make sure to grab files for
 ​docker-compose.yml: The app definitions for Jellyfin, Sonarr, etc..
 ​status.sh: The dashboard for GPU and storage vitals.
 ​mount-vault.sh: The optional tool for external drive integration. 
+to download all copy and paste the command below into your terminal hit enter 
+​wget https://github.com/markvx1irondestroyer-hub/-Mercury-The-Headless-Zombie-Media-Stack-/archive/refs/heads/main.zip && unzip main.zip && cd -Mercury-The-Headless-Zombie-Media-Stack--main && chmod +x masterinstaller.sh && ./masterinstaller.sh
 Then, run the new master installer to automate the installation of NVIDIA drivers, Docker, and the Mercury environment:
 chmod +x masterinstaller.sh && ./masterinstaller.sh
 
