@@ -2,7 +2,7 @@
 > If you are using AMD Radeon or Intel QuickSync instead of the NVIDIA GTX 750, follow these steps to reconfigure the "Zombie" stack:
 > Step 1: Run the Swap Script
 >  * In your terminal, run: nano gpu-swap.sh
->  * Paste the script code provided above.
+>  * Paste the script code provided in gpu-swap.sh file.
 >  * Save and Exit (Ctrl+O, then Ctrl+X).
 >  * Run it: chmod +x gpu-swap.sh && ./gpu-swap.sh
 > Step 2: Edit the Blueprint (docker-compose.yml)
