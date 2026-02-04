@@ -73,6 +73,15 @@ To make your media stack work as one unit, the apps must "talk" to each other us
       **ONCE and IF successful Congratulations 🎊 👏 Enjoy 😁 
       **🧟‍♂️ you now have a Headless Zombie 🧟‍♂️ scouring 
       **The Internet building your media collection 👌 
-​⚠️ Disclaimer: Please always check the code and understand its function before installing it on your system. 
-  By running these scripts, you acknowledge that you do so at your own risk. I am not responsible 
-  For any data loss, hardware issues, or system instability that may occur during or after the installation process.
+​​⚠️ Safety & Responsibility Disclaimer
+​While this stack is designed to be a "set-and-forget" solution, please follow these 
+safety guidelines to protect your data and hardware:  
+​Check the Code: Always inspect scripts and command strings before running them in your terminal. 
+Running unsigned code from the internet carries inherent risks; 
+ensure you understand the script's actions before execution.
+​Do Not Unplug Active Drives: Once the "Internal Trick" (fstab mount) is active, do not unplug your 
+Expansion drive while the system is powered on. 
+Abruptly removing a mounted drive can cause filesystem corruption or permanent data loss.
+​User Responsibility: By using these scripts, you acknowledge that you are doing so at your own risk.
+​Final Disclaimer: The author is not responsible for any data loss, hardware issues, 
+or system instability that may occur during the use of this repository.
