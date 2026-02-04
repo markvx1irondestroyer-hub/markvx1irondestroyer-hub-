@@ -12,7 +12,16 @@ Then, run the new master installer to automate the installation of NVIDIA driver
 chmod +x masterinstaller.sh && ./masterinstaller.sh
 
 > Note: The system will automatically reboot after completion to initialize the NVIDIA kernel modules for your GTX 750.
-> 
+> ⚠️ Critical: The "Mount-First" Rule
+​In a Docker-based environment, the order of operations is everything. You must always ensure your 
+external drives are mounted and (optionally) mount-vault.sh before running the m up command.
+​Why this matters:
+​When Docker starts a container with a volume mapping (e.g., /media/linux/Expansion), it looks for 
+that folder on your host system.
+If the drive is NOT mounted: Docker will see an empty directory on your OS Drive. It will "helpfully" create 
+that folder and start writing your 50GB movies directly to your small SSD/Boot drive, filling it up and crashing your OS.
+The "Ghost" Effect: If you mount the drive after Docker has started, the real drive will "cover up" the folders Docker created. 
+You won't see your files, and you'll be left wondering why your disk space is disappearing.
 ✅️ ⚠️ Phase 2: The "Final Mission" Checklist⚠️
 While the masterinstaller.sh handles the heavy lifting, your server is not fully functional until the apps are linked. Complete these steps in order:
  * Secure the Command Center (ttyd):
@@ -65,6 +74,23 @@ To make your media stack work as one unit, the apps must "talk" to each other us
 3. Jellyfin API Key
  * Where: Administration ➔ Dashboard ➔ Advanced ➔ API Keys.
  * Purpose: Allows Jellyseerr to see your current library.
+​🏗️ The Mercury Architecture: Quarantine & Vault Logic
+The Built in extra locations are redundant and can be ignored if only using one Hard drivebut they 
+Allow for expansion and upgrades later if you want to add extra storage later
+​Unlike standard "hardlink" setups that prioritize speed, the Mercury Server is designed for 
+Data Integrity and Hardware Longevity. It treats storage as two distinct zones to 
+protect the primary collection from corruption and "bad" data.
+​☣️ Zone 1: The Quarantine (Torrents Drive)
+​Purpose: All active and completed downloads reside here.
+​Risk Mitigation: Torrenting can be intensive on drive headers and carries a higher risk of "bad" or 
+corrupted files. If this drive fails or the filesystem (exFAT/NTFS) corrupts due to high I/O, the permanent 
+library remains untouched.
+​The Logic: We intentionally use Copy + Delete (instead of Atomic Moves). In the event of a power failure or 
+system crash during a transfer, the original file is preserved in the Quarantine until the copy is verified in the Vault.
+​🏛️ Zone 2: The Vault (Expansion Drive)
+​Purpose: The curated, "approved" library.
+​Safety: This drive only sees sequential write operations when a movie is "promoted" from Quarantine. This minimizes 
+fragmentation and extends the physical life of the drive.
 💡 PRO-TIPS FOR CONFIGURATION
  * Add a tabs folder for web UIs on your phone with your server's for quick access 
  * Copy/Paste Only: Never type these keys by hand to avoid connection errors.
