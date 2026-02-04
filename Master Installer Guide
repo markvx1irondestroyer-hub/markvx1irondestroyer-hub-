@@ -1,4 +1,4 @@
-To start your Mercury: The Headless Zombie Media Stack from scratch, follow these updated instructions.
+To start your Mercury: The Headless Zombie Media Stack, follow these instructions.
 🚀 Phase 1: The Foundation
 Download the project files to your home directory folder:
 ​masterinstaller.sh: The primary foundation and driver setup.
@@ -46,13 +46,13 @@ echo "--------------------------------"
 [span_21](start_span)echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link[span_21](end_span)."
 
 📱 Quick Access Dashboard
-| Service | Port | Purpose |
-|---|---|---|
-| ttyd | 7681 | Web-based terminal access |
-| Jellyfin | 8096 | Watching your media |
-| Jellyseerr | 5055 | Requesting new movies and shows |
-| Prowlarr | 9696 | Central hub for all indexers |
-| qBittorrent | 8080 | Managing active downloads |
+|   Service   | Port |       Purpose                   |         
+|-------------|------|---------------------------------|
+| ttyd        | 7681 | Web-based terminal access       |
+| Jellyfin    | 8096 | Watching your media             |
+| Jellyseerr  | 5055 | Requesting new movies and shows |
+| Prowlarr    | 9696 | Central hub for all indexers    |
+| qBittorrent | 8080 | Managing active downloads       |
 ⚠️ While the "One-Line Method" handles the heavy lifting of installing drivers and deploying containers, your server is not truly functional yet. You must complete several manual configuration steps to link these apps together and secure your data.
 ✅ FINAL MISSION: THE "YOU'RE NOT DONE" CHECKLIST
 The script finished, but the Zombie needs a soul. Complete these steps in order:
@@ -73,14 +73,14 @@ The script finished, but the Zombie needs a soul. Complete these steps in order:
  * Action: Ensure you ran the "Internal Trick" during installation or via m mount.
  * Task: Verify your external drive is mounted to /media/linux/Expansion so Jellyfin can actually see your media.
 📱 QUICK ACCESS DASHBOARD
-| Service | Port | Purpose |
-|---|---|---|
-| Jellyfin | 8096 | Watching your media |
-| Jellyseerr | 5055 | Requesting new movies |
-| Prowlarr | 9696 | Central hub for trackers |
-| Radarr/Sonarr | 7878/8989 | Movie/TV Automation |
-| qBittorrent | 8080 | Managing active downloads |
-| ttyd | 7681 | Web-based terminal access |
+|    Service    | Port      | Purpose                   |
+|---------------|-----------|---------------------------|
+| Jellyfin      | 8096      | Watching your media       |
+| Jellyseerr    | 5055      | Requesting new movies     |
+| Prowlarr      | 9696      | Central hub for trackers  |
+| Radarr/Sonarr | 7878/8989 | Movie/TV Automation       |
+| qBittorrent   | 8080      | Managing active downloads |
+| ttyd          | 7681      | Web-based terminal access |
 🔑 THE MASTER API KEY GUIDE
 To make your media stack work as one unit, the apps must "talk" to each other using API keys.
 1. Sonarr & Radarr API Keys
@@ -100,3 +100,6 @@ To make your media stack work as one unit, the apps must "talk" to each other us
       **ONCE and IF successful Congratulations 🎊 👏 Enjoy 😁 
       **🧟‍♂️ you now have a Headless Zombie 🧟‍♂️ scouring 
       **The Internet building your media collection 👌 
+​⚠️ Disclaimer: Please always check the code and understand its function before installing it on your system. 
+  By running these scripts, you acknowledge that you do so at your own risk. I am not responsible 
+  For any data loss, hardware issues, or system instability that may occur during or after the installation process.
