@@ -1,0 +1,28 @@
+> 🚀 How to use the GPU-Swap Tool
+> If you are using AMD Radeon or Intel QuickSync instead of the NVIDIA GTX 750, follow these steps to reconfigure the "Zombie" stack:
+> Step 1: Run the Swap Script
+>  * In your terminal, run: nano gpu-swap.sh
+>  * Paste the script code provided above.
+>  * Save and Exit (Ctrl+O, then Ctrl+X).
+>  * Run it: chmod +x gpu-swap.sh && ./gpu-swap.sh
+> Step 2: Edit the Blueprint (docker-compose.yml)
+> You must tell the containers to use the system's Direct Rendering Manager (DRM) instead of the NVIDIA Toolkit.
+>  * Open your config: nano ~/mercury/docker-compose.yml
+>  * Find the Jellyfin section.
+>    3. Delete the lines starting with deploy: and resources:.
+>    4. Add these lines exactly under the Jellyfin service name:
+> devices:
+>   - /dev/dri:/dev/dri  # Maps the GPU to the Zombie
+> 
+> Step 3: Refresh the Stack
+> Run the Mercury reset command to apply the changes:
+> m reset
+> Step 4: Verify
+> Run m gpu to open nvtop. You should now see your AMD or Intel GPU active and ready for transcoding[span_5](end_span)!
+> 
+📋 Comparison for User Documentation
+| GPU Brand | Tech Required | m gpu Command |
+|---|---|---|
+| NVIDIA (GTX 750) | NVIDIA Container Toolkit | nvidia-smi |
+| AMD Radeon | Mesa VA Drivers | nvtop |
+| Intel QuickSync | Intel Media Driver | nvtop |
