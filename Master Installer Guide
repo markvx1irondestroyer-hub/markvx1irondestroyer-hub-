@@ -1,0 +1,91 @@
+To start your Mercury: The Headless Zombie Media Stack from scratch, follow these updated instructions.
+🚀 Phase 1: The Foundation
+Download the project files to your home directory. Then, run the new master installer to automate the installation of NVIDIA drivers, Docker, and the Mercury environment:
+chmod +x masterinstaller.sh && ./masterinstaller.sh
+
+> Note: The system will automatically reboot after completion to initialize the NVIDIA kernel modules for your GTX 750.
+> 
+⚠️ Phase 2: The "Final Mission" Checklist
+While the masterinstaller.sh handles the heavy lifting, your server is not fully functional until the apps are linked. Complete these steps in order:
+ * Secure the Command Center (ttyd):
+   * Action: Open http://your-ip:7681.
+   * Task: Log in to manage your server remotely.
+ * Sync the "Arr" Empire (Prowlarr):
+   * Action: Open http://your-ip:9696.
+   * Task: Add your indexers and link Sonarr and Radarr via Settings > Apps.
+ * Claim Your Library (Jellyfin & Jellyseerr):
+   * Action: Open Jellyfin (8096) to create your libraries.
+   * Action: Open Jellyseerr (5055) and sign in with Jellyfin to link your request automation.
+ * Lock the Vault (External Storage):
+   * Action: If you didn't do it during the install, run the vault mounter.
+   * Task: Verify your drive is at /media/linux/Expansion.
+🔑 The Soul Injector (Post-Install API Extraction)
+To make linking these apps easier, use this script logic (which you can save as extract-keys.sh) after you have opened the apps for the first time:
+#!/bin/bash
+# 🧟 MERCURY: extract-keys.sh
+echo "📡 Extracting API Keys from the Vault..."
+
+# [span_20](start_span)Extract keys from XML files located in the config directory[span_20](end_span)
+SONARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/sonarr/config.xml)
+RADARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/radarr/config.xml)
+PROWLARR_KEY=$(grep -oP '(?<=<ApiKey>).*?(?=</ApiKey>)' ~/mercury/config/prowlarr/config.xml)
+
+echo "--------------------------------"
+echo "✅ Sonarr Key:   $SONARR_KEY"
+echo "✅ Radarr Key:   $RADARR_KEY"
+echo "✅ Prowlarr Key: $PROWLARR_KEY"
+echo "--------------------------------"
+[span_21](start_span)echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link[span_21](end_span)."
+
+📱 Quick Access Dashboard
+| Service | Port | Purpose |
+|---|---|---|
+| ttyd | 7681 | Web-based terminal access |
+| Jellyfin | 8096 | Watching your media |
+| Jellyseerr | 5055 | Requesting new movies and shows |
+| Prowlarr | 9696 | Central hub for all indexers |
+| qBittorrent | 8080 | Managing active downloads |
+⚠️ While the "One-Line Method" handles the heavy lifting of installing drivers and deploying containers, your server is not truly functional yet. You must complete several manual configuration steps to link these apps together and secure your data.
+✅ FINAL MISSION: THE "YOU'RE NOT DONE" CHECKLIST
+The script finished, but the Zombie needs a soul. Complete these steps in order:
+1. Secure the Command Center (ttyd)
+ * Action: Open your Web Terminal at http://your-ip:7681.
+ * Task: Log in with your system credentials to ensure you can manage your "Zombie" remotely without a monitor.
+2. Sync the "Arr" Empire (Prowlarr)
+ * Action: Go to http://your-ip:9696.
+ * Task: * Add your indexers (torrent sites/trackers).
+   * Navigate to Settings > Apps and add Sonarr and Radarr.
+   * Copy the API Keys from the "General" settings of Sonarr/Radarr and paste them into Prowlarr to link them.
+3. Claim Your Library (Jellyfin & Jellyseerr)
+ * Action: Open Jellyfin (http://your-ip:8096) first to create your media libraries (Movies/TV).
+ * Task: Point your libraries to /data/storage or /data/expansion.
+ * Action: Open Jellyseerr (http://your-ip:5055).
+ * Task: Sign in with Jellyfin, then follow the setup wizard to link Radarr and Sonarr using their API keys.
+4. Lock the Vault (Hard Drive)
+ * Action: Ensure you ran the "Internal Trick" during installation or via m mount.
+ * Task: Verify your external drive is mounted to /media/linux/Expansion so Jellyfin can actually see your media.
+📱 QUICK ACCESS DASHBOARD
+| Service | Port | Purpose |
+|---|---|---|
+| Jellyfin | 8096 | Watching your media |
+| Jellyseerr | 5055 | Requesting new movies |
+| Prowlarr | 9696 | Central hub for trackers |
+| Radarr/Sonarr | 7878/8989 | Movie/TV Automation |
+| qBittorrent | 8080 | Managing active downloads |
+| ttyd | 7681 | Web-based terminal access |
+🔑 THE MASTER API KEY GUIDE
+To make your media stack work as one unit, the apps must "talk" to each other using API keys.
+1. Sonarr & Radarr API Keys
+ * Where: Settings ➔ General ➔ Security.
+ * Purpose: Allows Prowlarr and Jellyseerr to send movie/show requests.
+2. Prowlarr API Key
+ * Where: Settings ➔ General.
+ * Purpose: Required to manage trackers from other apps.
+3. Jellyfin API Key
+ * Where: Administration ➔ Dashboard ➔ Advanced ➔ API Keys.
+ * Purpose: Allows Jellyseerr to see your current library.
+💡 PRO-TIPS FOR CONFIGURATION
+ * Add a tabs folder for web UIs on your phone with your server's for quick access 
+ * Copy/Paste Only: Never type these keys by hand to avoid connection errors.
+ * Test the Connection: Always click the Test button in the app settings until you see a green checkmark before saving.
+ * Download Pathing: In qBittorrent, ensure the save path is directed to your "Landing Zone" on /data/storage.
