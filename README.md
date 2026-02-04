@@ -17,3 +17,4 @@ Key Differences at a Glance
 | RAM Efficiency | Standard | Optimized (Reclaims ~2GB RAM) |
 | Control | Monitor or Smartphone | Smartphone is the Crown |
 
+​⚠️ Disclaimer: Please always check the code and understand its function before installing it on your system. By running these scripts, you acknowledge that you do so at your own risk. I am not responsible for any data loss, hardware issues, or system instability that may occur during or after the installation process.
