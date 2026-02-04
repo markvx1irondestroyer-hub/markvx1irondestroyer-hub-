@@ -13,7 +13,7 @@ chmod +x masterinstaller.sh && ./masterinstaller.sh
 
 > Note: The system will automatically reboot after completion to initialize the NVIDIA kernel modules for your GTX 750.
 > 
-⚠️ Phase 2: The "Final Mission" Checklist
+✅️ ⚠️ Phase 2: The "Final Mission" Checklist⚠️
 While the masterinstaller.sh handles the heavy lifting, your server is not fully functional until the apps are linked. Complete these steps in order:
  * Secure the Command Center (ttyd):
    * Action: Open http://your-ip:7681.
@@ -45,33 +45,6 @@ echo "✅ Prowlarr Key: $PROWLARR_KEY"
 echo "--------------------------------"
 [span_21](start_span)echo "📱 Copy these to Jellyseerr (Port 5055) to finish the link[span_21](end_span)."
 
-📱 Quick Access Dashboard
-|   Service   | Port |       Purpose                   |         
-|-------------|------|---------------------------------|
-| ttyd        | 7681 | Web-based terminal access       |
-| Jellyfin    | 8096 | Watching your media             |
-| Jellyseerr  | 5055 | Requesting new movies and shows |
-| Prowlarr    | 9696 | Central hub for all indexers    |
-| qBittorrent | 8080 | Managing active downloads       |
-⚠️ While the "One-Line Method" handles the heavy lifting of installing drivers and deploying containers, your server is not truly functional yet. You must complete several manual configuration steps to link these apps together and secure your data.
-✅ FINAL MISSION: THE "YOU'RE NOT DONE" CHECKLIST
-The script finished, but the Zombie needs a soul. Complete these steps in order:
-1. Secure the Command Center (ttyd)
- * Action: Open your Web Terminal at http://your-ip:7681.
- * Task: Log in with your system credentials to ensure you can manage your "Zombie" remotely without a monitor.
-2. Sync the "Arr" Empire (Prowlarr)
- * Action: Go to http://your-ip:9696.
- * Task: * Add your indexers (torrent sites/trackers).
-   * Navigate to Settings > Apps and add Sonarr and Radarr.
-   * Copy the API Keys from the "General" settings of Sonarr/Radarr and paste them into Prowlarr to link them.
-3. Claim Your Library (Jellyfin & Jellyseerr)
- * Action: Open Jellyfin (http://your-ip:8096) first to create your media libraries (Movies/TV).
- * Task: Point your libraries to /data/storage or /data/expansion.
- * Action: Open Jellyseerr (http://your-ip:5055).
- * Task: Sign in with Jellyfin, then follow the setup wizard to link Radarr and Sonarr using their API keys.
-4. Lock the Vault (Hard Drive)
- * Action: Ensure you ran the "Internal Trick" during installation or via m mount.
- * Task: Verify your external drive is mounted to /media/linux/Expansion so Jellyfin can actually see your media.
 📱 QUICK ACCESS DASHBOARD
 |    Service    | Port      | Purpose                   |
 |---------------|-----------|---------------------------|
