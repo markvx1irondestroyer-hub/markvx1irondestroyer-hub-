@@ -1,3 +1,5 @@
+[![🧟 Mercury Stack Validation](https://github.com/markvx1irondestroyer-hub/-Mercury-The-Headless-Zombie-Media-Stack-/actions/workflows/validate-stack.yml/badge.svg)](https://github.com/markvx1irondestroyer-hub/-Mercury-The-Headless-Zombie-Media-Stack-/actions/workflows/validate-stack.yml)
+
 ​⚠️ NOTE!. Master installer on this repository page will fast install option 1 if you plan to keep a monitor check repository page for option 2 to go Full Headless Zombie and ditch the monitor requirement for GPU function 
 1. Desktop (Head) Mode Description
 (For the Mercury-The-Headless-Zombie-Media-Stack repository)
