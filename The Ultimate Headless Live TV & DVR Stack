@@ -1,0 +1,110 @@
+🇨🇦 The Ultimate Headless Live TV & DVR Stack
+A Step-by-Step Guide for Jellyfin + Threadfin + Autoheal
+This guide provides a stable, "Set and Forget" configuration for adding free, legal Live TV to Jellyfin using a headless Linux server.
+📂 Phase 1: Directory & Permission Setup
+First, create the "home" for your data. We use specific folders to separate your config files from your recordings and automation scripts.
+ * Run this block in your terminal:
+   # Create the folder structure
+mkdir -p ~/live-tv-stack/{threadfin-config,scripts,recordings} && \
+
+# Ensure your user owns these folders (Critical for Docker permissions)
+sudo chown -R $USER:$USER ~/live-tv-stack && \
+
+# Set read/write/execute permissions
+chmod -R 755 ~/live-tv-stack && \
+
+# Enter the project folder
+cd ~/live-tv-stack
+
+> 💡 Troubleshooting Tip: If you get a "Permission Denied" error later when Docker tries to save settings, re-run the sudo chown command above. It ensures Docker can "write" to your folders.
+> 
+🐳 Phase 2: Create the Docker Configuration
+We use Docker Compose to manage two services: Threadfin (the tuner) and Autoheal (a watchdog that restarts Threadfin if it freezes).
+ * Open the editor: nano docker-compose.yml
+ * Paste this exact code:
+<!-- end list -->
+services:
+  threadfin:
+    image: fyb3roptik/threadfin:latest
+    container_name: threadfin-standalone
+    restart: unless-stopped
+    # Injects your local user ID so you don't have permission issues
+    user: "${UID_GID}" 
+    ports:
+      - "34400:34400"
+    volumes:
+      - ./threadfin-config:/home/threadfin/conf
+    environment:
+      - TZ=America/Toronto
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:34400/version"]
+      interval: 2m
+      timeout: 15s
+      retries: 3
+      start_period: 2m
+
+  autoheal:
+    image: willfarrell/autoheal
+    container_name: autoheal
+    restart: unless-stopped
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+(Press Ctrl+O, Enter, then Ctrl+X to save and exit.)
+🚀 Phase 3: Launching the Stack
+Because we are keeping the server secure, you must use sudo to launch. This command also "injects" your user ID into the container.
+sudo UID_GID="$(id -u):$(id -g)" docker compose up -d
+
+> 💡 Troubleshooting Tip: To check if it's actually running, type sudo docker ps. You should see both threadfin-standalone and autoheal listed.
+> 
+🇨🇦 Phase 4: Threadfin Configuration (The Web UI)
+This is where the actual "tuning" happens. Do not just go to the IP address; you must use the /web/ suffix.
+ * Find your IP: Type hostname -I | awk '{print $1}' in your terminal.
+ * Access the Dashboard: Open http://[YOUR-IP]:34400/web/ in your browser.
+ * The "Must-Do" Setting: Go to Settings > EPG Source. Change it to XEPG and click Save. If you skip this, Jellyfin will never see your channels.
+ * Add Playlist: Go to Playlist > New.
+   * M3U File: https://iptv-org.github.io/iptv/countries/ca.m3u.
+ * Setup Filters: Go to Filters > New. Click the Group Title bar and select the categories you want (e.g., Entertainment, Movies, Documentaries).
+📍 Phase 5: Manual Mapping (The Final Bridge)
+Jellyfin cannot see your channels until they are "Mapped" and turn Green in Threadfin.
+ * Open the Mapping Tab: You will see your filtered list of channels.
+ * Pick Your Channels: Click an individual channel row.
+ * Link to Guide: Select your XMLTV File and search for the matching XMLTV ID.
+ * Make it Active: Ensure the "Active" box is checked. Once you click Done, the row must turn Green.
+ * Verify: Look at your Threadfin dashboard. Under "Stream Information," Mapped Channels must be greater than 0.
+🏒 Phase 6: Automated Commercial Skipping
+ * Create the script: nano ~/live-tv-stack/scripts/comskip-clean.sh.
+ * Paste the Logic:
+<!-- end list -->
+#!/bin/bash
+FILEPATH="$1"
+# Protect sports/hockey from being cut
+if echo "$FILEPATH" | grep -Ei "Sports|Hockey|NHL|CFL"; then
+    exit 0
+fi
+comskip --ini="/scripts/comskip.ini" "$FILEPATH"
+
+ * Set Permissions: chmod +x ~/live-tv-stack/scripts/comskip-clean.sh.
+🔗 Phase 7: Linking to Jellyfin
+Now that Threadfin is "Green" and active, add the links to Jellyfin Dashboard > Live TV.
+ * Tuner Device (+): Type: M3U Tuner | URL: http://[YOUR-IP]:34400/m3u/threadfin.m3u.
+ * Guide Data (+): Type: XMLTV | URL: http://[YOUR-IP]:34400/xmltv/threadfin.xml.
+ * DVR Settings:
+   * Post-processor: /scripts/comskip-clean.sh.
+   * Arguments: "{path}".
+> 💡 Final Tip: If channels don't show up immediately, click Refresh Guide Data in Jellyfin. 
+This triggers the system to pull the new "Green" channels from Threadfin.
+​⚠️ Safety & Responsibility Disclaimer
+​While this stack is designed to be a "set-and-forget" solution, please follow these 
+safety guidelines to protect your data and hardware:  
+​Check the Code: Always inspect scripts and command strings before running them in your 
+terminal. Running unsigned code from the internet carries inherent risks; ensure you 
+understand the script's actions before execution.
+​Do Not Unplug Active Drives: Once the "Internal Trick" (fstab mount) is active, do not unplug your 
+Expansion drive while the system is powered on. Abruptly removing a mounted 
+drive can cause filesystem corruption or permanent data loss.
+​User Responsibility: By using these scripts, you acknowledge that you are doing so at your own risk.
+​Final Disclaimer: The author is not responsible for any data loss, hardware issues, or 
+system instability that may occur during the use of this repository.
