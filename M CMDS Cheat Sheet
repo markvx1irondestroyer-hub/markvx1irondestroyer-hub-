@@ -10,8 +10,14 @@ chmod +x masterinstaller.sh && ./masterinstaller.sh
 ​m ps    : Shows exactly which apps are running and their network ports.  
 ​m reset : The "Nuclear" option—wipes cache and restarts the entire stack fresh.  
 ​m mount : Refreshes and remounts your "Vault" expansion drive.  
-​m urls  : Displays the local IP links for all your Web UIs.
+​m urls  : Displays the local IP links for all your Web UIs
+    ​🆘 The Emergency Button
+​If your movies aren't showing up or an app feels "stuck," run the magic repair command:
+m heal
+What it does: Re-mounts your drives, fixes folder permissions, restarts crashed apps, 
+and cleans up system junk in one go.
+Optional m tv follow steps in mercury Sideload Protocol for 2018 Samsung TV's 
 ​📂 Quick File Paths
 ​Blueprint: ~/mercury/docker-compose.yml  
 ​Vault: /media/linux/Expansion  
-​Configs: ~/mercury/config/  
+​Configs: ~/mercury/config/
